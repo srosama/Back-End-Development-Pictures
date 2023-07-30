@@ -1,6 +1,7 @@
 from . import app
 import os
 import json
+from flask import abort
 from flask import jsonify, request, make_response, abort, url_for  # noqa; F401
 
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
@@ -35,9 +36,12 @@ def count():
 ######################################################################
 @app.route("/picture", methods=["GET"])
 def get_pictures():
-    r = make_response(jsonify(data=data))
-    r.headers["Content-Type"] == "application/json"
-    return r
+    picList = []
+    cont =0
+    for i, dic in enumerate(data):
+        picList.append(dic["pic_url"])
+    return picList
+    makeMeJson= jsonify(data=picList)
 
 ######################################################################
 # GET A PICTURE
@@ -49,6 +53,9 @@ def get_picture_by_id(id):
         for i, dic in enumerate(data):
             if dic['id'] == id:
                     return f'{dic["pic_url"]}'
+            if id == 404:
+                abort(404)
+
 
 
 ######################################################################
