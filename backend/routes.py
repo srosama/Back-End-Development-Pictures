@@ -1,6 +1,8 @@
 from . import app
 import os
 import json
+import random
+from flask import abort
 from flask import jsonify, request, make_response, abort, url_for  # noqa; F401
 
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
@@ -35,7 +37,12 @@ def count():
 ######################################################################
 @app.route("/picture", methods=["GET"])
 def get_pictures():
-    pass
+    picList = []
+    cont =0
+    for i, dic in enumerate(data):
+        picList.append(dic["pic_url"])
+    return picList
+    makeMeJson= jsonify(data=picList)
 
 ######################################################################
 # GET A PICTURE
@@ -44,28 +51,32 @@ def get_pictures():
 
 @app.route("/picture/<int:id>", methods=["GET"])
 def get_picture_by_id(id):
-    pass
+        for i, dic in enumerate(data):
+            if dic['id'] == id:
+                tackMe = jsonify(id=dic["id"])
+                return tackMe, 200
+            elif id == 404:
+                return abort(404)
 
 
-######################################################################
-# CREATE A PICTURE
-######################################################################
+
+
+# "http://dummyimage.com/230x100.png/dddddd/000000"
 @app.route("/picture", methods=["POST"])
 def create_picture():
-    pass
+    # Add new random nubmer for the img
+    width = random.randint(150,1905)
+    hight = random.randint(150,1950)
+    data.append('testChecl')
+    return data
 
-######################################################################
-# UPDATE A PICTURE
-######################################################################
 
 
 @app.route("/picture/<int:id>", methods=["PUT"])
 def update_picture(id):
     pass
 
-######################################################################
-# DELETE A PICTURE
-######################################################################
+
 @app.route("/picture/<int:id>", methods=["DELETE"])
 def delete_picture(id):
     pass
