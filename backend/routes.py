@@ -1,8 +1,6 @@
 from . import app
 import os
 import json
-import random
-from flask import abort
 from flask import jsonify, request, make_response, abort, url_for  # noqa; F401
 
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
@@ -51,14 +49,7 @@ def get_pictures():
 
 @app.route("/picture/<int:id>", methods=["GET"])
 def get_picture_by_id(id):
-        for i, dic in enumerate(data):
-            if dic['id'] == id:
-                tackMe = jsonify(id=dic["id"])
-                return tackMe, 200
-            elif id == 404:
-                return abort(404)
-
-
+    pass
 
 
 # "http://dummyimage.com/230x100.png/dddddd/000000"
